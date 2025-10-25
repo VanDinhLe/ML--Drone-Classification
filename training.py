@@ -30,7 +30,7 @@ val_dataset = tf.keras.utils.image_dataset_from_directory(
 dataset = dataset.prefetch(buffer_size=tf.data.AUTOTUNE)
 val_dataset = val_dataset.prefetch(buffer_size=tf.data.AUTOTUNE)
 
-
+# ResUnit building block
 def ResUnit(x):
     shortcut = x
     conv3x3 = layers.Conv2D(32, (3, 3), activation='relu', padding='same')(x)
@@ -40,7 +40,8 @@ def ResUnit(x):
     output = layers.add([conv3x3, shortcut])
     output = layers.ReLU()(output)
     return output
-    
+
+# ResStack block built from ResUnit
 def ResStack(x):
     conv1x1 = layers.Conv2D(32, (1, 1), activation='linear', padding='same')(x)
 
@@ -49,7 +50,7 @@ def ResStack(x):
 
     return output
 
-# Define CNN model
+# Define DRNN model
 def create_model():
     inputs = keras.Input(shape=(320, 320, 3))
     x = layers.Rescaling(1./255)(inputs)  # Normalize input
