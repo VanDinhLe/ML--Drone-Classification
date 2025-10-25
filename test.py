@@ -31,17 +31,17 @@ model = keras.models.load_model("best_model.keras")  # or .keras
 loss, acc = model.evaluate(test_dataset)
 print(f"Test Accuracy: {acc:.4f}")
 
-# --- Evaluate ---
+# evaluate on test set
 loss, acc = model.evaluate(test_dataset)
 print(f"Test Accuracy (Keras): {acc:.4f}")
 
-# --- True labels & predictions ---
+# set up true labels & predictions
 y_true = np.concatenate([y.numpy() for x, y in test_dataset], axis=0)
 y_pred_prob = model.predict(test_dataset)
 y_pred = (y_pred_prob > 0.5).astype(int)
 y_score = y_pred_prob.ravel()
 
-# --- Metrics ---
+# calculate metrics
 acc = accuracy_score(y_true, y_pred)
 f1 = f1_score(y_true, y_pred)
 precision = precision_score(y_true, y_pred)
@@ -54,14 +54,14 @@ print(f"Recall:    {recall:.4f}")
 print(f"F1 Score:  {f1:.4f}")
 print(f"ROC AUC:   {roc_auc:.4f}")
 
-# --- Confusion Matrix ---
+#  plot confusion matrix 
 cm = confusion_matrix(y_true, y_pred)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=class_names)
 disp.plot(cmap=plt.cm.Blues)
 plt.title("Confusion Matrix (Test Set)")
 plt.show()
 
-# --- ROC Curve ---
+# plot ROC Curve 
 fpr, tpr, thresholds = roc_curve(y_true, y_score)
 roc_auc_manual = auc(fpr, tpr)
 
@@ -75,6 +75,7 @@ plt.legend(loc="lower right")
 plt.grid(True)
 plt.show()
 
+# plot Pre-Recall curve
 precision_vals, recall_vals, pr_thresholds = precision_recall_curve(y_true, y_score)
 avg_precision = average_precision_score(y_true, y_score)
 
