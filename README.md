@@ -1,3 +1,5 @@
+this project is based the paper:
+S. Basak and B. Scheers, "Passive radio system for real-time drone detection and DoA estimation," 2018 International Conference on Military Communications and Information Systems (ICMCIS), Warsaw, Poland, 2018, pp. 1-6, doi: 10.1109/ICMCIS.2018.8398721.
 
 # Notes
 ### folders / files
